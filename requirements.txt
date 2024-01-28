@@ -1,0 +1,5 @@
+flask
+pipenv
+python-dotenv
+Faker
+flask-sqlalchemy
