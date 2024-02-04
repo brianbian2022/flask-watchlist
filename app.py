@@ -4,6 +4,7 @@ from flask import Flask, render_template
 from flask import url_for
 from faker import Faker
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 import os, sys, click
 
 dbType = 'sqlite'
@@ -41,7 +42,12 @@ app.config['SQLALCHEMY_BINDS'] = {
 }
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app) # 初始化扩展，传入程序实例app
-
+migrate = Migrate(app, db)
+# 数据迁移工具
+# 执行;
+# flask db init 将创建migrations目录
+# flask db migrate
+# More info check https://github.com/miguelgrinberg/Flask-Migrate
 
 # 创建数据库模型
 class User(db.Model):
@@ -103,8 +109,9 @@ def initdb(drop, fake):
 def index_page():
     user = User.query.first()
     movies = Movie.query.all()
-    name = user.name
-    return render_template('index.html', name=name, movies=movies)
+    #name = user.name
+    #return render_template('index.html', name=name, movies=movies)
+    return render_template('index.html', user=user, movies=movies)
 
 
 @app.route('/hello')
@@ -118,3 +125,9 @@ def hello_page():
 @app.route('/user/<name>')
 def user_page(name):
     return "User Page: "+name
+
+
+@app.errorhandler(404)
+def page_404(error):
+    user = User.query.first()
+    return render_template('404.html', user=user), 404

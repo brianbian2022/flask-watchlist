@@ -2,13 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>{{ name }}'s 观看清单</title>
+        <title>{{ user.name }}'s 观看清单</title>
         <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
     </head>
     <body>
         <h1><img alt="Avatar" class="avatar" src="{{ url_for('static', filename='images/avatar.png') }}">
-            {{ name }}'s 观看清单</h1>
+            {{ user.name }}'s 观看清单</h1>
         
         {# length filter to get the movies length #}
         <p> {{ movies|length }} Titles</p>

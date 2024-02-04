@@ -3,3 +3,4 @@ pipenv
 python-dotenv
 Faker
 flask-sqlalchemy
+Flask-Migrate
