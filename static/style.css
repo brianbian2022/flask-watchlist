@@ -35,21 +35,20 @@ footer{
     rgba(0, 0, 0, 0.12)
     ;
 }
-.movie-list 
-    li {
-        padding: 12px
-        24px;
-        border-bottom: 1px solid #ddd;
+.movie-list li {
+    padding: 12px
+    24px;
+    border-bottom: 1px solid #ddd;
 }
-.movie-list
-li
-:last-child {
-border-bottom:none;
+.movie-list li:last-child {
+    border-bottom:none;
 }
-.movie-list
-li
-:hover {
-background-color: #f8f9fa;
+.movie-list li:hover {
+    background-color: #f8f9fa;
+}
+
+.float-right {
+    float: right;
 }
 /* 龙猫图片 */
 .totoro {

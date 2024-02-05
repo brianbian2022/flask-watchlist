@@ -111,7 +111,7 @@ def index_page():
     movies = Movie.query.all()
     #name = user.name
     #return render_template('index.html', name=name, movies=movies)
-    return render_template('index.html', user=user, movies=movies)
+    return render_template('index.html', movies=movies)
 
 
 @app.route('/hello')
@@ -130,4 +130,12 @@ def user_page(name):
 @app.errorhandler(404)
 def page_404(error):
     user = User.query.first()
-    return render_template('404.html', user=user), 404
+    #return render_template('404.html', user=user), 404
+    # 使用app.context_processor函数注入参数后就可以不再手动传入了
+    return render_template('404.html'), 404
+
+
+@app.context_processor
+def inject_user():
+    user = User.query.first()
+    return dict(user = user)
