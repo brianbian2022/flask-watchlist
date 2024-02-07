@@ -139,3 +139,8 @@ def page_404(error):
 def inject_user():
     user = User.query.first()
     return dict(user = user)
+
+
+@app.route('/apitest/xss')
+def apitest_home_page():
+    return "<h1>XSS Test Page</h1>"

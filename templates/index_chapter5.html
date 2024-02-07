@@ -1,0 +1,29 @@
+<! DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{{ user.name }}'s 观看清单</title>
+        <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+    </head>
+    <body>
+        <h1><img alt="Avatar" class="avatar" src="{{ url_for('static', filename='images/avatar.png') }}">
+            {{ user.name }}'s 观看清单</h1>
+        
+        {# length filter to get the movies length #}
+        <p> {{ movies|length }} Titles</p>
+        <ul class="movie-list">
+            {% for movie in movies %}
+            <li> {{ movie.title }} - {{ movie.year }}</li>
+            {% endfor %}
+        </ul>
+        <img alt="Avatar" class="totoro" src="{{ url_for('static', filename='images/totoro.gif') }}">
+        <p>
+        <footer>
+            <small>&copy; 2024 
+            <a href="http://helloflask.com/tutorial">Hello Flask</a>
+            </small>
+            <p><img src="{{ url_for('static', filename='foo.jpg') }}">
+        </footer>
+    </body>
+</html>
