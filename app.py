@@ -1,7 +1,7 @@
  # -*- coding: utf-8-*-
 
 from flask import Flask, render_template
-from flask import url_for
+from flask import url_for, request, redirect, flash
 from faker import Faker
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -34,7 +34,7 @@ def fake_data():
     for i in range(2):
         movies.append({'title': fake.name(), 'year': fake.year()})
     return name,movies
-
+app.config['SECRET_KEY'] = 'dev'
 # app.config['SQLALCHEMY_URI'] = prefix+os.path.join(app.root_path, 'data.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = prefix+os.path.join(app.root_path, 'data.db')
 app.config['SQLALCHEMY_BINDS'] = {
@@ -105,9 +105,20 @@ def initdb(drop, fake):
             db.session.add(Movie(title=m['title'], year=m['year']))
         db.session.commit() 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index_page():
-    user = User.query.first()
+    if request.method=='POST':
+        title = request.form.get('title')
+        year = request.form.get('year')
+        if not title or not year or len(year)!=4 or len(title)>60:
+            flash("输入错误，请检查输入内容")
+            return redirect(url_for('index_page'))
+        movie = Movie(title=title, year=year)
+        db.session.add(movie)
+        db.session.commit()
+        flash('电影条目添加成功')
+        return redirect(url_for('index_page'))
+    #user = User.query.first()
     movies = Movie.query.all()
     #name = user.name
     #return render_template('index.html', name=name, movies=movies)
